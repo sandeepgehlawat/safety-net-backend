@@ -71,6 +71,11 @@ async fn main() -> Result<()> {
     info!("Connecting to database...");
     let db = Database::new(&database_url).await?;
 
+    // Run database migrations
+    info!("Running database migrations...");
+    db.run_migrations().await?;
+    info!("Migrations complete");
+
     // Initialize Redis
     info!("Connecting to Redis...");
     let redis_client = redis::Client::open(redis_url)?;
