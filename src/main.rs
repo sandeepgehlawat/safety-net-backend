@@ -61,6 +61,12 @@ async fn main() -> Result<()> {
     let redis_url = std::env::var("REDIS_URL")
         .unwrap_or_else(|_| "redis://localhost:6379".to_string());
 
+    // Log connection targets (mask password)
+    let masked_db_url = mask_url(&database_url);
+    let masked_redis_url = mask_url(&redis_url);
+    info!("DATABASE_URL: {}", masked_db_url);
+    info!("REDIS_URL: {}", masked_redis_url);
+
     // Initialize database
     info!("Connecting to database...");
     let db = Database::new(&database_url).await?;
@@ -251,6 +257,20 @@ async fn health_check(State(state): State<AppState>) -> &'static str {
         lending, lp, tokens
     );
     "OK"
+}
+
+/// Mask password in URL for logging
+fn mask_url(url: &str) -> String {
+    // Replace password in URLs like postgres://user:pass@host or redis://:pass@host
+    if let Some(at_pos) = url.find('@') {
+        if let Some(colon_pos) = url[..at_pos].rfind(':') {
+            let scheme_end = url.find("://").map(|p| p + 3).unwrap_or(0);
+            if colon_pos > scheme_end {
+                return format!("{}***{}", &url[..colon_pos + 1], &url[at_pos..]);
+            }
+        }
+    }
+    url.to_string()
 }
 
 /// Public global stats endpoint
