@@ -13,8 +13,8 @@ axum-extra = { version = "0.9", features = ["typed-header"] }
 tower = "0.5"
 tower-http = { version = "0.6", features = ["cors", "trace"] }
 
-# GraphQL
-async-graphql = { version = "7.0", features = ["uuid", "chrono", "decimal"] }
+# GraphQL (pinned to 7.0.x for Rust 1.85 compatibility)
+async-graphql = { version = "=7.0.11", features = ["uuid", "chrono", "decimal"] }
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
