@@ -1,0 +1,51 @@
+[package]
+name = "safety-net-backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.40", features = ["full"] }
+
+# Web framework
+axum = { version = "0.7", features = ["ws", "macros"] }
+axum-extra = { version = "0.9", features = ["typed-header"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+
+# GraphQL
+async-graphql = { version = "7.0", features = ["uuid", "chrono", "decimal"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "uuid", "chrono", "rust_decimal", "json"] }
+
+# Redis
+redis = { version = "0.27", features = ["tokio-comp", "connection-manager"] }
+
+# Ethereum
+alloy = { version = "0.5", features = ["full", "signer-local", "provider-ws"] }
+
+# HTTP client (for Tenderly, etc.)
+reqwest = { version = "0.12", features = ["json"] }
+
+# Utils
+uuid = { version = "1.10", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+rust_decimal = { version = "1.36", features = ["serde"] }
+thiserror = "1.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+futures = "0.3"
+dashmap = "6.1"
+parking_lot = "0.12"
+dotenvy = "0.15"
+hex = "0.4"
+async-trait = "0.1"
+
+[dev-dependencies]
+tokio-test = "0.4"
