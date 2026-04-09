@@ -147,6 +147,8 @@ async fn main() -> Result<()> {
         // GraphQL
         .route("/graphql", get(graphql_playground))
         .route("/graphql", post(graphql_handler))
+        // Docs redirect to GraphQL playground
+        .route("/docs", get(docs_redirect))
         // WebSocket
         .route("/ws", get(ws_handler))
         // Health check
@@ -234,6 +236,11 @@ async fn graphql_handler(
 /// GraphQL playground
 async fn graphql_playground() -> impl IntoResponse {
     Html(GraphiQLSource::build().endpoint("/graphql").finish())
+}
+
+/// Docs redirect to GraphQL playground
+async fn docs_redirect() -> impl IntoResponse {
+    axum::response::Redirect::permanent("/graphql")
 }
 
 /// Health check endpoint
