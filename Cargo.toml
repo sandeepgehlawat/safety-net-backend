@@ -32,6 +32,10 @@ alloy = { version = "0.5", features = ["full", "signer-local", "provider-ws"] }
 # HTTP client (for Tenderly, etc.)
 reqwest = { version = "0.12", features = ["json"] }
 
+# Pinned transitive deps for Rust 1.86 compatibility
+darling = "=0.20.10"
+home = "=0.5.9"
+
 # Utils
 uuid = { version = "1.10", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
