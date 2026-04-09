@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["rustup"]
+
+[phases.install]
+cmds = ["rustup default nightly", "cargo fetch"]
+
+[phases.build]
+cmds = ["cargo build --release"]
+
+[start]
+cmd = "./target/release/safety-net-backend"
