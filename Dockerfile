@@ -21,8 +21,9 @@ RUN cargo build --release || true
 # Remove the dummy build artifacts
 RUN rm -rf src target/release/deps/safety_net_backend*
 
-# Copy the actual source code
+# Copy the actual source code and migrations
 COPY src ./src
+COPY migrations ./migrations
 
 # Build the actual application
 RUN cargo build --release
