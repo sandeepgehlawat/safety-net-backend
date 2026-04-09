@@ -26,14 +26,13 @@ sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "uuid", "chro
 # Redis
 redis = { version = "0.27", features = ["tokio-comp", "connection-manager"] }
 
-# Ethereum (pinned to 0.4.x to avoid getrandom 0.4 which requires edition2024)
-alloy = { version = "0.4", features = ["full", "signer-local", "provider-ws"] }
+# Ethereum
+alloy = { version = "0.5", features = ["full", "signer-local", "provider-ws"] }
 
 # HTTP client (for Tenderly, etc.)
 reqwest = { version = "0.12", features = ["json"] }
 
 # Utils
-ruint = "1.12"  # Pin to avoid edition2024 requirement in newer versions
 uuid = { version = "1.10", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 rust_decimal = { version = "1.36", features = ["serde"] }

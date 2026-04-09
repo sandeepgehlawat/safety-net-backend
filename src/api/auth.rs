@@ -1,6 +1,5 @@
 use crate::data::{Database, User};
-use alloy::primitives::keccak256;
-use alloy::signers::Signature;
+use alloy::primitives::{keccak256, PrimitiveSignature};
 use anyhow::{anyhow, Result};
 use axum::{
     extract::State,
@@ -147,7 +146,7 @@ fn verify_siwe_signature(message: &str, signature_hex: &str) -> Result<String, S
     }
 
     // Parse signature components (r, s, v)
-    let signature = Signature::try_from(sig_bytes.as_slice())
+    let signature = PrimitiveSignature::try_from(sig_bytes.as_slice())
         .map_err(|e| format!("Invalid signature format: {}", e))?;
 
     // Create the EIP-191 signed message hash
