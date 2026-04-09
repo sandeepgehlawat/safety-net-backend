@@ -13,8 +13,8 @@ axum-extra = { version = "0.9", features = ["typed-header"] }
 tower = "0.5"
 tower-http = { version = "0.6", features = ["cors", "trace"] }
 
-# GraphQL (pinned to 7.0.x for Rust 1.85 compatibility)
-async-graphql = { version = "=7.0.11", features = ["uuid", "chrono", "decimal"] }
+# GraphQL
+async-graphql = { version = "7.0", features = ["uuid", "chrono", "decimal"] }
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
@@ -31,10 +31,6 @@ alloy = { version = "0.5", features = ["full", "signer-local", "provider-ws"] }
 
 # HTTP client (for Tenderly, etc.)
 reqwest = { version = "0.12", features = ["json"] }
-
-# Pinned transitive deps for Rust 1.86 compatibility
-darling = "=0.20.10"
-home = "=0.5.9"
 
 # Utils
 uuid = { version = "1.10", features = ["v4", "serde"] }
@@ -53,9 +49,3 @@ async-trait = "0.1"
 
 [dev-dependencies]
 tokio-test = "0.4"
-
-# Force older darling version for Rust 1.86 compatibility
-[patch.crates-io]
-darling = { git = "https://github.com/TedDriggs/darling.git", tag = "v0.20.10" }
-darling_core = { git = "https://github.com/TedDriggs/darling.git", tag = "v0.20.10" }
-darling_macro = { git = "https://github.com/TedDriggs/darling.git", tag = "v0.20.10" }
