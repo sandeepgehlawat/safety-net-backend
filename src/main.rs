@@ -170,7 +170,9 @@ async fn main() -> Result<()> {
             CorsLayer::new()
                 .allow_origin(Any)
                 .allow_methods([Method::GET, Method::POST, Method::OPTIONS])
-                .allow_headers(Any),
+                .allow_headers(Any)
+                .expose_headers(Any)
+                .allow_credentials(false),
         )
         .with_state(app_state);
 
