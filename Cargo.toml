@@ -33,6 +33,7 @@ alloy = { version = "0.5", features = ["full", "signer-local", "provider-ws"] }
 reqwest = { version = "0.12", features = ["json"] }
 
 # Utils
+getrandom = "0.2"  # Pin to 0.2 to avoid edition2024 requirement
 uuid = { version = "1.10", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 rust_decimal = { version = "1.36", features = ["serde"] }
