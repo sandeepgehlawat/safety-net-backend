@@ -162,6 +162,8 @@ async fn main() -> Result<()> {
 
     // Build router
     let app = Router::new()
+        // Root health check (Railway default)
+        .route("/", get(health_check))
         // Auth endpoints
         .route("/auth/connect", post(connect_wallet_handler))
         // GraphQL
