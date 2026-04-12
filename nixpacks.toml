@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["rustup"]
+nixPkgs = ["rustup", "openssl", "pkg-config", "cacert"]
 
 [phases.install]
 cmds = ["rustup default nightly", "cargo fetch"]
