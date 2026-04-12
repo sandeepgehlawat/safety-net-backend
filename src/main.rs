@@ -46,8 +46,12 @@ pub struct AppState {
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    // Early debug output (before tracing setup)
+    eprintln!("[DEBUG] safety-net-backend starting...");
+
     // Load environment
     dotenvy::dotenv().ok();
+    eprintln!("[DEBUG] dotenv loaded");
 
     // Initialize logging
     let subscriber = FmtSubscriber::builder()
@@ -55,6 +59,7 @@ async fn main() -> Result<()> {
         .with_target(true)
         .finish();
     tracing::subscriber::set_global_default(subscriber)?;
+    eprintln!("[DEBUG] tracing initialized");
 
     info!("Starting Safety Net Backend...");
 
