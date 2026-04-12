@@ -172,12 +172,16 @@ async fn main() -> Result<()> {
         .layer(
             CorsLayer::new()
                 .allow_origin(Any)
-                .allow_methods([Method::GET, Method::POST, Method::OPTIONS])
+                .allow_methods([Method::GET, Method::POST, Method::OPTIONS, Method::PUT, Method::DELETE])
                 .allow_headers(Any)
                 .expose_headers(Any)
-                .allow_credentials(false),
+                .allow_credentials(false)
+                .max_age(std::time::Duration::from_secs(3600)),
         )
         .with_state(app_state);
+
+    // Wrap with additional CORS fallback for preflight
+    let app = app.fallback(fallback_handler);
 
     // Start server
     let port = std::env::var("PORT").unwrap_or_else(|_| "3460".to_string());
@@ -298,4 +302,33 @@ async fn global_stats(State(state): State<AppState>) -> Json<serde_json::Value> 
             "total_positions": 0,
         })),
     }
+}
+
+/// Fallback handler for unmatched routes (handles OPTIONS preflight)
+async fn fallback_handler(
+    method: Method,
+    uri: axum::http::Uri,
+) -> impl IntoResponse {
+    let status = if method == Method::OPTIONS {
+        axum::http::StatusCode::OK
+    } else {
+        axum::http::StatusCode::NOT_FOUND
+    };
+
+    let body = if method == Method::OPTIONS {
+        String::new()
+    } else {
+        format!("Not found: {} {}", method, uri)
+    };
+
+    (
+        status,
+        [
+            ("Access-Control-Allow-Origin", "*"),
+            ("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"),
+            ("Access-Control-Allow-Headers", "*"),
+            ("Access-Control-Max-Age", "3600"),
+        ],
+        body,
+    )
 }
