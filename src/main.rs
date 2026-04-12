@@ -30,6 +30,7 @@ use axum::{
 use async_graphql::http::GraphiQLSource;
 use std::sync::Arc;
 use tower_http::cors::{Any, CorsLayer};
+use tower_http::trace::TraceLayer;
 use tracing::{info, Level};
 use tracing_subscriber::FmtSubscriber;
 
@@ -174,6 +175,7 @@ async fn main() -> Result<()> {
         .route("/health", get(health_check))
         // Stats (public)
         .route("/stats", get(global_stats))
+        .layer(TraceLayer::new_for_http())
         .layer(
             CorsLayer::new()
                 .allow_origin(Any)
@@ -270,6 +272,7 @@ async fn docs_redirect() -> impl IntoResponse {
 
 /// Health check endpoint
 async fn health_check() -> Json<serde_json::Value> {
+    info!("Health check endpoint hit");
     Json(serde_json::json!({"status": "ok"}))
 }
 
