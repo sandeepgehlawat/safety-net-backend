@@ -49,3 +49,6 @@ async-trait = "0.1"
 
 [dev-dependencies]
 tokio-test = "0.4"
+testcontainers = "0.18"
+testcontainers-modules = { version = "0.6", features = ["postgres", "redis"] }
+wiremock = "0.6"

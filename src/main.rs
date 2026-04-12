@@ -10,6 +10,9 @@ mod indexer;
 mod monitors;
 mod protocols;
 
+#[cfg(test)]
+mod test_utils;
+
 use api::{auth, graphql, ws, AuthState, WsState};
 use alerter::{AlertService, PushNotifier, TelegramBot, EmailSender};
 use data::{Database, PositionStore};

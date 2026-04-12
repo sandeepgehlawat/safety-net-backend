@@ -1,10 +1,25 @@
+pub mod abi;
 pub mod aave_v3;
 pub mod uniswap_v3;
 
 use alloy::primitives::Address;
 
+// ABI module provides contract interfaces (IAaveV3Pool, IUniswapV3Pool, etc.)
+// Import specific interfaces as needed in adapter modules
 pub use aave_v3::AaveV3Adapter;
 pub use uniswap_v3::UniswapV3Adapter;
+
+/// Get chain ID from chain name
+pub fn chain_id(chain: &str) -> u64 {
+    match chain {
+        "ethereum" | "mainnet" => 1,
+        "arbitrum" | "arbitrum_one" => 42161,
+        "base" => 8453,
+        "optimism" => 10,
+        "polygon" => 137,
+        _ => 1,
+    }
+}
 
 /// Health factor and position data from a lending protocol
 #[derive(Debug, Clone)]
