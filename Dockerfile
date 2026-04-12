@@ -41,6 +41,9 @@ WORKDIR /app
 # Copy the binary from builder
 COPY --from=builder /app/target/release/safety-net-backend /app/safety-net-backend
 
+# Copy migrations folder for runtime migrations
+COPY --from=builder /app/migrations /app/migrations
+
 # Expose port
 EXPOSE 3460
 
