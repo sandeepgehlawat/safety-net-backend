@@ -269,13 +269,8 @@ async fn docs_redirect() -> impl IntoResponse {
 }
 
 /// Health check endpoint
-async fn health_check(State(state): State<AppState>) -> &'static str {
-    let (lending, lp, tokens) = state.store.position_count();
-    tracing::debug!(
-        "Health check: {} lending, {} LP, {} token positions",
-        lending, lp, tokens
-    );
-    "OK"
+async fn health_check() -> Json<serde_json::Value> {
+    Json(serde_json::json!({"status": "ok"}))
 }
 
 /// Mask password in URL for logging
